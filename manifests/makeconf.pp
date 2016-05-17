@@ -27,6 +27,7 @@
 define portage::makeconf(
   $ensure = present,
   $content = '',
+  $order = undef,
 ) {
   include portage
 
@@ -34,6 +35,13 @@ define portage::makeconf(
     concat::fragment { $name:
         content => template('portage/makeconf.conf.erb'),
         target  => $portage::make_conf,
+        order => $order?{
+            undef => $content?{
+                '' => 11,
+                default => 10
+            },
+            default => $order
+        }
     }
   }
 }
