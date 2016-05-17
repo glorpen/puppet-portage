@@ -17,6 +17,7 @@ module Puppet::Util::Portage
   BASE_ATOM_REGEX              = Regexp.new "^#{PACKAGE_PATTERN}$"
   VERSIONED_ATOM_REGEX         = Regexp.new "^#{COMPARE_PATTERN}#{PACKAGE_PATTERN}-#{VERSION_PATTERN}$"
   SLOTTED_ATOM_REGEX           = Regexp.new "^#{PACKAGE_PATTERN}:#{SLOT_PATTERN}$"
+  SLOTTED_OPT_ATOM_REGEX       = Regexp.new "^#{PACKAGE_PATTERN}(?::#{SLOT_PATTERN})?$"
   VERSIONED_SLOTTED_ATOM_REGEX = Regexp.new "^#{COMPARE_PATTERN}#{PACKAGE_PATTERN}-#{VERSION_PATTERN}:#{SLOT_PATTERN}$"
   WILDCARD_ATOM_REGEX          = Regexp.new "^(=?)#{PACKAGE_PATTERN}-#{WILDCARD_PATTERN}$"
   WILDCARD_SLOTTED_ATOM_REGEX  = Regexp.new "^(=?)#{PACKAGE_PATTERN}-#{WILDCARD_PATTERN}:#{SLOT_PATTERN}$"
@@ -40,7 +41,7 @@ module Puppet::Util::Portage
   # @return [TrueClass]
   # @return [FalseClass]
   def valid_package?(package_name)
-    !!(package_name =~ BASE_ATOM_REGEX)
+    !!(package_name =~ SLOTTED_OPT_ATOM_REGEX)
   end
 
   # Determine if a string is a valid DEPEND atom version
